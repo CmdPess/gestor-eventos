@@ -1,0 +1,16 @@
+services:
+  docs:
+    image: gestor_eventos_local_docs
+    container_name: gestor_eventos_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./gestor_eventos:/app/gestor_eventos:z
+    ports:
+      - '9000:9000'
+    command: /start-docs
