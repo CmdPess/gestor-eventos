@@ -3,7 +3,20 @@ from allauth.socialaccount.forms import SignupForm as SocialSignupForm
 from django.contrib.auth import forms as admin_forms
 from django.utils.translation import gettext_lazy as _
 
+from wagtail.users.forms import UserEditForm, UserCreationForm
+from django import forms
+
 from .models import User
+
+class CustomUserEditForm(UserEditForm):
+
+    class Meta(UserEditForm.Meta):
+        fields = UserEditForm.Meta.fields | {"name"}
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields | {"name"}
 
 
 class UserAdminChangeForm(admin_forms.UserChangeForm):

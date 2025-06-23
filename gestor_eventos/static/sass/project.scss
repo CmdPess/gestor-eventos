@@ -1,6 +1,5 @@
 @import 'custom_bootstrap_vars';
 @import '~bootstrap/scss/bootstrap';
-
 // project specific CSS goes here
 
 ///////////////
@@ -15,13 +14,17 @@ $black: #000;
 $pink: #f2dede;
 $dark-pink: #eed3d7;
 $red: #b94a48;
-
+$cor-principal: #198754;
 ////////////
 // Alerts //
 ////////////
 
 // bootstrap alert CSS, translated to the django-standard levels of
 // debug, info, success, warning, error
+
+*{
+  font-family: 'Montserrat', sans-serif;
+}
 
 .alert-debug {
   background-color: $white;
@@ -33,4 +36,188 @@ $red: #b94a48;
   background-color: $pink;
   border-color: $dark-pink;
   color: $red;
+}
+
+.seminario-banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+}
+
+
+.navbar {
+  transition: all 0.3s ease;
+}
+
+.navbar-shrink {
+  padding: 0.4rem 1rem;
+  background-color: #f8f9fa; /* mesmo tom do bg-light */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar img {
+  transition: all 0.3s ease;
+  max-height: 50px;
+}
+
+.navbar-shrink img {
+  max-height: 40px;
+}
+
+.navbar-logo {
+  max-height: 60px;
+  transition: all 0.3s ease;
+}
+.navbar-shrink .navbar-logo {
+  max-height: 40px;
+}
+
+.imagem-cartao{
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.section {
+  scroll-margin-top: 60px;
+}
+
+.frameVideo{
+  max-width: 60%;
+  margin: auto;
+}
+
+.fotoOradores{
+
+}
+
+
+:root {
+  --cor-principal: #198754;
+  --cor-principal-bg: color-mix(in srgb, var(--cor-principal), white 55%);
+  --cor-border-conclusao: color-mix(in srgb, var(--cor-principal), black 15%);
+}
+
+.bg-light-green {
+    background-color: var(--cor-principal-bg);
+}
+
+.timeline-programa {
+  border-left: 2px solid var(--cor-principal);
+  padding-left: 30px;
+  margin-left: 20px;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 20px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: -37px;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border: 2px solid var(--cor-principal);
+  border-radius: 50%;
+}
+
+.cor-principal {
+  color: var(--cor-principal);
+}
+
+.bg-cor-principal {
+  background-color: var(--cor-principal);
+}
+
+.btn-success {
+  color: #fff;
+  background-color: var(--cor-principal);
+  border-color: var(--cor-principal);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  box-shadow: 0 0 0 0.15rem var(--cor-principal-bg);
+  background-color: var(--cor-principal);
+  --bs-btn-hover-border-color: var(--cor-border-conclusao);
+  outline: none;
+}
+
+.bg-gray{
+  background-color: #efefee;
+}
+
+.bg-white{
+  background-color: #fffefe;
+}
+
+.corpoSeminario{
+  padding-top: 73px;
+}
+
+.banner-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;       /* mostra a imagem inteira */
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.banner-img-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* mostra a imagem inteira */
+  z-index: 1;
+}
+
+.seminario-banner {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.banner-texto {
+  position: relative;
+  z-index: 2;
+  color: white;
+  padding: 2rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.banner-texto-secundario{
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    position: relative;
+    z-index: 2;
+}
+
+.banner-inferior {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  color: white;
 }

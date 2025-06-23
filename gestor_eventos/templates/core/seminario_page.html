@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+{% load wagtailembeds_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+  {% block navbar-items %}
+        {% for item in navbar_items %}
+           <div class="container-fluid">
+              <a class="nav-link col-md-auto cor-principal fs-7" href="#{{ item.id }}">{{ item.label }}</a>
+           </div>
+        {% endfor %}
+  {% endblock %}
+
+  {% block body %}
+    <div class="corpoSeminario">
+      {% for block in page.info %}
+
+        {% if block.block_type == 'cor' %}
+          {% with cor=block.value|striptags %}
+            <style>
+              :root {
+                --cor-principal: {{ cor|default:'#0055ff' }};
+              }
+            </style>
+          {% endwith %}
+        {% endif %}
+
+       {% if block.block_type == 'foto_banner' %}
+         {% if block.value.foto %}
+           <div class="seminario-banner">
+                {% image block.value.foto original as bg %}
+              <img src="{{ bg.url }}" alt="Banner" class="banner-img-bg">
+
+              <div class="banner-texto">
+                {% if block.value.titulo %}
+                  <h1>{{ block.value.titulo }}</h1>
+                {% endif %}
+                {% if block.value.subtitulo %}
+                  <p>{{ block.value.subtitulo }}</p>
+                {% endif %}
+              </div>
+
+              <div class="banner-inferior text-md-center h5">
+                <div>
+                  {% if block.value.local %}
+                    <p class="banner-texto-secundario"><strong>Local:</strong> {{ block.value.local }}</p>
+                  {% endif %}
+                  {% if block.value.dataHora %}
+                    <p class="banner-texto-secundario"><strong>Data e Hora:</strong> {{ block.value.dataHora|date:"d/m/Y H:i" }}</p>
+                  {% endif %}
+                </div>
+                {% if block.value.qr_code %}
+                  {% image block.value.qr_code fill-200x200 as qr %}
+                  <div>
+                    <img src="{{ qr.url }}" alt="QR Code" class="qr-code-img">
+                  </div>
+                {% endif %}
+              </div>
+           </div>
+
+         {% endif %}
+       {% endif %}
+
+
+    {% if block.block_type == 'programa' %}
+      <section id="programa" class="section py-5 {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray{% endif %}">
+        <div class="container">
+          <h2 class="text-center mb-5 text-uppercase cor-principal">{{ block.value.titulo }}</h2>
+          <!-- Centralizado com leve deslocamento à esquerda -->
+          <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7"> <!-- controla largura -->
+              <ul class="timeline-programa list-unstyled position-relative">
+                {% for item in block.value.lista %}
+                  <li class="timeline-item mb-4">
+                    <div class="inner-item {% if item.destaque %}bg-light-green p-3 rounded{% endif %}">
+                      <div class="hora fw-bold cor-principal">{{ item.hora|time:"H:i" }}</div>
+                      <div class="titulo fw-semibold">{{ item.titulo }}</div>
+                      {% if item.responsavel %}
+                        <div class="responsavel fst-italic text-muted">{{ item.responsavel }}</div>
+                      {% endif %}
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+
+     {% if block.block_type == 'conclusoes' %}
+       <section id="conclusoes" class="section py-5 {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray{% endif %}">
+         <div class="container">
+           <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+           <div class="row">
+             {% for ficheiro in block.value.lista %}
+                 {% if forloop.first or forloop.counter0|divisibleby:3 %}
+                   {% if not forloop.first %}</div>{% endif %}
+                   <div class="col-md-6">
+                 {% endif %}
+               <div class="mb-3">
+                 <a href="{{ ficheiro.ficheiro.url }}" class="btn btn-success btn-block text-start d-flex align-items-center py-3 px-4" target="_blank" style="border-radius: 20px;">
+                   <i class="fas fa-file-alt me-3"></i>
+                  {{ ficheiro.descricao|default:ficheiro.ficheiro.title }}
+                 </a>
+               </div>
+               {% if forloop.last %}</div>{% endif %}
+             {% endfor %}
+         </div>
+       </section>
+     {% endif %}
+
+      {% if block.block_type == 'apresentacao' %}
+        <section id="apresentacao" class="section p-3 text-center {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray {% endif %} py-5">
+            <div class="container">
+                <h2 class="cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+              <div class="pt-3 col-12 col-md-8 mx-auto">
+                <h4 class="fa-bold">{{ block.value.subtitulo}}</h4>
+                <h5>{{ block.value.nome }}</h5>
+                <p>{{ block.value.consIn|richtext }}</p>
+              </div>
+            </div>
+        </section>
+      {% endif %}
+
+      {% if block.block_type == 'video' %}
+        {% if block.value.video_url %}
+          <section id="video" class="section p-3 {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray {% endif %} py-5">
+              <div class="container">
+                <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+                  <div class="ratio ratio-16x9 frameVideo">
+                      {% embed block.value.video_url %}
+                  </div>
+              </div>
+          </section>
+        {% endif %}
+      {% endif %}
+
+     {% if block.block_type == 'contactos' %}
+       <section id="contactos" class="section p-3 {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray{% endif %} py-5">
+         <div class="container">
+           <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+           <div class="row align-items-start">
+             <div class="col-md-6 mb-4">
+               {% if block.value.morada %}
+                 <div class="d-flex mb-5 mt-5">
+                   <i class="bi bi-house-door fs-1 me-3 cor-principal"></i>
+                   <div>
+                     <p class="mb-1 fw-bold fs-5">MORADA:</p>
+                     <p class="mb-0 fs-6">{{ block.value.morada|linebreaksbr }}</p>
+                   </div>
+                 </div>
+               {% endif %}
+
+               {% if block.value.email %}
+                 <div class="d-flex mb-5 mt-5">
+                   <i class="bi bi-envelope fs-1 me-3 cor-principal"></i>
+                   <div>
+                     <p class="mb-1 fw-bold fs-5">E-MAIL:</p>
+                     <p class="mb-0 fs-6">{{ block.value.email }}</p>
+                   </div>
+                 </div>
+               {% endif %}
+
+               {% if block.value.telefone %}
+                 <div class="d-flex mb-5 mt-5">
+                   <i class="bi bi-telephone fs-1 me-3 cor-principal"></i>
+                   <div>
+                     <p class="mb-1 fw-bold fs-5">TELEFONE:</p>
+                     <p class="mb-0 fs-6">{{ block.value.telefone|linebreaksbr }}</p>
+                   </div>
+                 </div>
+               {% endif %}
+             </div>
+
+             <div class="col-md-6">
+               {% if block.value.mapa_embed %}
+                 <div class="ratio ratio-16x9 mt-4">
+                   {{ block.value.mapa_embed|safe }}
+                 </div>
+               {% endif %}
+             </div>
+           </div>
+         </div>
+       </section>
+     {% endif %}
+
+     {% if block.block_type == 'oradores' %}
+       {% if forloop.counter0|divisibleby:2 %}
+         {% with section_bg="bg-white" card_bg="bg-gray" %}
+           <section id="oradores" class="section {{ section_bg }} py-5">
+             <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+             <div class="container">
+               <div class="row gy-4">
+                 {% for orador in block.value.lista %}
+                   <div class="col-12">
+                     <div class="p-4 {{ card_bg }} shadow-sm border rounded">
+                       <div class="row align-items-center p-5">
+                         <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                           {% if orador.photo %}
+                             {% image orador.photo fill-200x200 as img %}
+                             <img src="{{ img.url }}" alt="{{ img.alt }}" class="img-fluid rounded-circle shadow-sm border border-2" style="width: 150px; height: 150px; object-fit: cover;">
+                           {% endif %}
+                         </div>
+                         <div class="col-12 col-md-9">
+                           <h5 class="fw-bold mb-1">{{ orador.nome }}</h5>
+                           <p class="fst-italic text-muted mb-2">{{ orador.subtitulo }}</p>
+                           <div class="small mb-2">{{ orador.biografia|richtext }}</div>
+                           {% if orador.horario or orador.titulo_palestra %}
+                             <div class="d-flex align-items-center text-muted mt-3">
+                               <i class="bi bi-clock me-2"></i>
+                               <span class="me-3">{{ orador.horario }}</span>
+                               <strong>{{ orador.titulo_palestra }}</strong>
+                             </div>
+                           {% endif %}
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 {% endfor %}
+               </div>
+             </div>
+           </section>
+         {% endwith %}
+       {% else %}
+         {% with section_bg="bg-gray" card_bg="bg-white" %}
+           <section id="oradores" class="section {{ section_bg }} py-5">
+             <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+             <div class="container">
+               <div class="row gy-4">
+                 {% for orador in block.value.lista %}
+                   <div class="col-12">
+                     <div class="p-4 {{ card_bg }} shadow-sm border rounded">
+                       <div class="row align-items-center p-5">
+                         <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                           {% if orador.photo %}
+                             {% image orador.photo fill-200x200 as img %}
+                             <img src="{{ img.url }}" alt="{{ img.alt }}" class="img-fluid rounded-circle shadow-sm border border-2" style="width: 150px; height: 150px; object-fit: cover;">
+                           {% endif %}
+                         </div>
+                         <div class="col-12 col-md-9">
+                           <h5 class="fw-bold mb-1">{{ orador.nome }}</h5>
+                           <p class="fst-italic text-muted mb-2">{{ orador.subtitulo }}</p>
+                           <div class="small mb-2">{{ orador.biografia|richtext }}</div>
+                           {% if orador.horario or orador.titulo_palestra %}
+                             <div class="d-flex align-items-center text-muted mt-3">
+                               <i class="bi bi-clock me-2"></i>
+                               <span class="me-3">{{ orador.horario }}</span>
+                               <strong>{{ orador.titulo_palestra }}</strong>
+                             </div>
+                           {% endif %}
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 {% endfor %}
+               </div>
+             </div>
+           </section>
+         {% endwith %}
+       {% endif %}
+     {% endif %}
+
+     {% if block.block_type == 'moderadores' %}
+       {% if forloop.counter0|divisibleby:2 %}
+         {% with section_bg="bg-white" card_bg="bg-gray" %}
+           <section id="moderadores" class="section {{ section_bg }} py-5">
+             <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+             <div class="container">
+               <div class="row gy-4">
+                 {% for moderador in block.value.lista %}
+                   <div class="col-12">
+                     <div class="p-4 {{ card_bg }} shadow-sm border rounded">
+                       <div class="row align-items-center p-5">
+                         <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                           {% if moderador.photo %}
+                             {% image moderador.photo fill-200x200 as img %}
+                             <img src="{{ img.url }}" alt="{{ img.alt }}" class="img-fluid rounded-circle shadow-sm border border-2" style="width: 150px; height: 150px; object-fit: cover;">
+                           {% endif %}
+                         </div>
+                         <div class="col-12 col-md-9">
+                           <h5 class="fw-bold mb-1">{{ moderador.nome }}</h5>
+                           <p class="fst-italic text-muted mb-2">{{ moderador.subtitulo }}</p>
+                           <div class="small mb-2">{{ moderador.biografia|richtext }}</div>
+                           {% if moderador.horario or moderador.titulo_palestra %}
+                             <div class="d-flex align-items-center text-muted mt-3">
+                               <i class="bi bi-clock me-2"></i>
+                               <span class="me-3">{{ moderador.horario }}</span>
+                               <strong>{{ moderador.titulo_palestra }}</strong>
+                             </div>
+                           {% endif %}
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 {% endfor %}
+               </div>
+             </div>
+           </section>
+         {% endwith %}
+       {% else %}
+         {% with section_bg="bg-gray" card_bg="bg-white" %}
+           <section id="moderadores" class="section {{ section_bg }} py-5">
+             <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+             <div class="container">
+               <div class="row gy-4">
+                 {% for moderador in block.value.lista %}
+                   <div class="col-12">
+                     <div class="p-4 {{ card_bg }} shadow-sm border rounded">
+                       <div class="row align-items-center p-5">
+                         <div class="col-12 col-md-3 text-center mb-3 mb-md-0">
+                           {% if moderador.photo %}
+                             {% image moderador.photo fill-200x200 as img %}
+                             <img src="{{ img.url }}" alt="{{ img.alt }}" class="img-fluid rounded-circle shadow-sm border border-2" style="width: 150px; height: 150px; object-fit: cover;">
+                           {% endif %}
+                         </div>
+                         <div class="col-12 col-md-9">
+                           <h5 class="fw-bold mb-1">{{ moderador.nome }}</h5>
+                           <p class="fst-italic text-muted mb-2">{{ moderador.subtitulo }}</p>
+                           <div class="small mb-2">{{ moderador.biografia|richtext }}</div>
+                           {% if moderador.horario or moderador.titulo_palestra %}
+                             <div class="d-flex align-items-center text-muted mt-3">
+                               <i class="bi bi-clock me-2"></i>
+                               <span class="me-3">{{ moderador.horario }}</span>
+                               <strong>{{ moderador.titulo_palestra }}</strong>
+                             </div>
+                           {% endif %}
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 {% endfor %}
+               </div>
+             </div>
+           </section>
+         {% endwith %}
+       {% endif %}
+     {% endif %}
+   {% endfor %}
+    </div>
+
+  {% endblock %}

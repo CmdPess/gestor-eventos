@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body%}
+  <div class="pb-5">
+    <div class="container mt-5 pt-5">
+       <h4>Eventos Futuros</h4>
+       {% for seminario in seminariopages_futuros %}
+
+          {% if forloop.first or forloop.counter0|divisibleby:3 %}
+            <div class="row pt-3">
+          {% endif %}
+
+          {% for block in seminario.info %}
+              {% if block.block_type == 'info' %}
+                {% with info=block.value %}
+                  <div class="col-md-4 d-flex">
+                    <div class="card p-4 h-100 w-100 d-flex flex-column">
+                      <div class="d-flex flex-row mb-3 justify-content-center">
+                        {% with info.foto as main_image %}
+                          {% if main_image %}
+                            {% image info.foto width-800 as img %}
+                            <img src="{{ img.url }}" alt="{{ img.alt }}" class="imagem-cartao">
+                          {% endif %}
+                        {% endwith %}
+                      </div>
+                      {% if info.nome %}
+                        <h6>{{ info.nome }}</h6>
+                      {% endif %}
+
+                      {% if info.desc %}
+                        <p>{{ info.desc|richtext }}</p>
+                        <p>{{ info.data }} - {{ info.hora }}</p>
+                      {% endif %}
+
+                      <div class="d-flex justify-content-between install mt-auto">
+                        <a href="{% pageurl seminario %}" class="text-primary" style="text-decoration: none">
+                          Ver mais&nbsp;<i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endwith %}
+              {% endif %}
+            {% endfor %}
+
+            {% if forloop.counter|divisibleby:3 or forloop.last %}
+              </div>
+            {% endif %}
+          {% endfor %}
+       </div>
+
+    <div class="container mt-5">
+       <h4>Todos os Eventos</h4>
+       {% for seminario in seminariopages %}
+
+          {% if forloop.first or forloop.counter0|divisibleby:3 %}
+            <div class="row pt-3">
+          {% endif %}
+
+          {% for block in seminario.info %}
+              {% if block.block_type == 'info' %}
+                {% with info=block.value %}
+                  <div class="col-md-4 d-flex">
+                    <div class="card p-4 h-100 w-100 d-flex flex-column">
+                      <div class="d-flex flex-row mb-3 justify-content-center">
+                        {% with info.foto as main_image %}
+                          {% if main_image %}
+                            {% image info.foto width-800 as img %}
+                            <img src="{{ img.url }}" alt="{{ img.alt }}" class="imagem-cartao">
+                          {% endif %}
+                        {% endwith %}
+                      </div>
+                      {% if info.nome %}
+                        <h6 class="fa-bold">{{ info.nome }}</h6>
+                      {% endif %}
+
+                      {% if info.desc %}
+                        <p>{{ info.desc|richtext }}</p>
+                        <p>{{ info.data }} - {{ info.hora }}</p>
+                      {% endif %}
+
+                      <div class="d-flex justify-content-between install">
+                        <a href="{% pageurl seminario %}" class="text-primary text-decoration-none">
+                          Ver mais&nbsp;<i class="fa fa-angle-right "></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endwith %}
+              {% endif %}
+            {% endfor %}
+
+            {% if forloop.counter|divisibleby:3 or forloop.last %}
+              </div>
+            {% endif %}
+          {% endfor %}
+       </div>
+
+  </div>
+
+    {% endblock %}
+
