@@ -2,21 +2,22 @@
 
 {% load i18n wagtailadmin_tags %}
 {% load allauth socialaccount %}
+{% load static %}
+
+
+{% block branding_login %}Entrar no Gestor de Eventos do CmdPess{% endblock %}
+
 
 {% block below_login %}
-    <br>
-    <a href="#" class="button button-longrunning">{% trans 'Log in Exercito' %}</a>
   <br />
   {% get_providers as socialaccount_providers %}
   {% if socialaccount_providers %}
     <p>{% translate "Please sign in with one of your existing third party accounts:" %}</p>
     <div class="socialaccount_ballot">
-              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
       {% get_providers as socialaccount_providers %}
       {% if socialaccount_providers %}
         {% for provider in socialaccount_providers %}
           {% provider_login_url provider process="login" scope=scope auth_params=auth_params as href %}
-                      {% element provider name=provider.name provider_id=provider.id href=href %}{% endelement %}
           {% element form method="post" no_visible_fields=True action=href %}
           {% slot actions %}
           {% csrf_token %}
@@ -28,7 +29,6 @@
             {% icon name="spinner" %}
             <em data-w-progress-target="label">Azure AD Exército</em>
           </button>
-                              {% element button type="submit" %}{{ provider.name }}{% endelement %}
         {% endslot %}
       {% endelement %}
     {% endfor %}
@@ -36,4 +36,11 @@
 </div>
 {% include "socialaccount/snippets/login_extra.html" %}
 {% endif %}
+{% endblock %}
+
+
+{% block branding_logo %}
+  <div class="login-logo">
+    <img src="{% static 'images/cmdpess_logo.png' %}" alt="Logo CmdPess" width="100" />
+  </div>
 {% endblock %}
