@@ -333,8 +333,8 @@ SOCIALACCOUNT_PROVIDERS = {
     "microsoft":{
     "APPS":[
         {
-            "client_id":"...",
-            "secret":"...",
+            "client_id": env("AUTH_PROVIDER_CLIENT_ID", default="..."),
+            "secret": env("AUTH_PROVIDER_SECRET", default="..."),
             "settings":{
                 "tenant":"organizations"
             }

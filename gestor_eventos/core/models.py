@@ -20,28 +20,42 @@ class GestorIndexPage(Page):
     def get_context(self, request):
         context = super().get_context(request)
 
-        # Todos os seminários
-        seminariopages = self.get_children().live().specific()
+        unidadepages = self.get_children().live().specific()
+        seminariopages = []
+
+        for unidade in unidadepages:
+            seminariopages.extend(unidade.get_children().live().specific())
+
         seminarios_futuros = []
+        seminarios_passados = []
 
         for page in seminariopages:
             for block in page.info:
-                if block.block_type == 'info' and block.value['data'] >= date.today():
-                    seminarios_futuros.append(page)
-                    break
+                if block.block_type == 'info':
+                    if block.value['data'] < date.today():
+                        seminarios_passados.append(page)
+                        break
+                    elif block.value['data'] >= date.today():
+                        seminarios_futuros.append(page)
+                        break
 
-        # Adiciona os dois ao contexto
-        context['seminariopages'] = seminariopages
+        context['seminariopages_passados'] = seminarios_passados
         context['seminariopages_futuros'] = seminarios_futuros
         return context
 
+
+
+class Unidade(Page):
+    titulo = RichTextField(blank=True)
+
+
 class VideoBlock(blocks.StructBlock):
-    titulo = blocks.CharBlock(classname="title", required=True, label="Titulo da secção, deve ser 'Transmissão'")
+    titulo = blocks.CharBlock(classname="title", required=True, label="Título da secção, deve ser 'Transmissão'")
     video_url = blocks.URLBlock(label="URL do vídeo (YouTube, Vimeo, etc)")
 
     class Meta:
         icon = "media"
-        label = "Vídeo"
+        label = "Transmissão"
 
 
 class ModeradoresBlock(blocks.StructBlock):
@@ -60,7 +74,7 @@ class ListaModeradoresBlock(blocks.StructBlock):
 class ProgramaItemBlock(blocks.StructBlock):
     hora = blocks.TimeBlock(label="Horário")
     titulo = blocks.CharBlock(label="Título")
-    responsavel = blocks.CharBlock(required=False, label="Subtítulo", help_text="Ex: Moderador ou nome do palestrante")
+    responsavel = blocks.RichTextBlock(required=False, label="Responsável", help_text="Ex: Moderador ou nome do palestrante")
     destaque = blocks.BooleanBlock(required=False, label="Destaque?", help_text="Destacar com fundo diferente")
 
     class Meta:
@@ -91,7 +105,7 @@ class ContactosBlock(blocks.StructBlock):
     morada = blocks.CharBlock(required=True, label="Morada")
     email = blocks.EmailBlock(required=False, label="Email de contacto")
     telefone = blocks.CharBlock(required=False, label="Telefone")
-    mapa_embed = blocks.TextBlock(required=True, label="Código iframe do mapa (Google Maps, etc.)")
+    mapa_embed = blocks.TextBlock(required=False, label="Código iframe do mapa (Google Maps, etc.)")
 
     class Meta:
         icon = 'site'
@@ -119,17 +133,26 @@ class ConclusaoBlock(blocks.StructBlock):
         label = "Ficheiro"
 
 class ListaConclusoes(blocks.StructBlock):
-    titulo = blocks.CharBlock(required=True, label = "Titulo da secção, deve ser 'Conclusões'")
+    titulo = blocks.CharBlock(required=True, label = "Título da secção, deve ser 'Conclusões'")
     lista = ListBlock(ConclusaoBlock, label = "Lista de Conclusões")
+
+    class Meta:
+        label = "Conclusões"
 
 class ApresentacaoBlock(blocks.StructBlock):
     titulo = blocks.CharBlock(required=True,label = "Titulo da secção de apresentação (deve ser 'Apresentação')")
-    subtitulo = blocks.CharBlock(required=False, label="Subtitulo")
+    subtitulo = blocks.CharBlock(required=False, label="Subtítulo")
     consIn = blocks.RichTextBlock(required=True, label="Considerações Iniciais")
+
+    class Meta:
+        label = "Apresentação"
 
 class GenericBlock(blocks.StructBlock):
     titulo = blocks.CharBlock(required=True, label = "Título da secção, deve ser 'Oradores'")
     conteudo = blocks.RichTextBlock(features=["bold", "italic", "link","ol","ul"], label="Conteúdo genérico")
+
+    class Meta:
+        label = "Bloco Genérico"
 
 class SeminarioInfoBlock(blocks.StructBlock):
     nome = blocks.CharBlock(required=True, max_length=255)
@@ -223,5 +246,8 @@ class SeminarioPage(Page):
                 items.append({'id': 'programa', 'label': 'PROGRAMA'})
                 adicionados.add('programa')
 
+            if block.block_type == 'generico' and 'generico' not in adicionados:
+                items.append({'id': block.value.titulo, 'label': block.value.titulo.upper()})
+                adicionados.add('programa')
         return items
 

@@ -158,44 +158,31 @@ $cor-principal: #198754;
 }
 
 .corpoSeminario{
-  padding-top: 73px;
-}
-
-.banner-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: contain;       /* mostra a imagem inteira */
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 1;
-}
-
-.banner-img-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  /* mostra a imagem inteira */
-  z-index: 1;
+ padding-top: 73px;
 }
 
 .seminario-banner {
+  min-height: 100vh;
   position: relative;
-  height: 100vh;
-  overflow: hidden;
-
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
-.banner-texto {
+.banner-background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* mostra o topo da imagem */
+  z-index: -1;
+}
+
+.banner-texto,
+.banner-inferior {
   position: relative;
   z-index: 2;
   color: white;
@@ -203,21 +190,7 @@ $cor-principal: #198754;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.banner-texto-secundario{
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-    position: relative;
-    z-index: 2;
-}
-
-.banner-inferior {
-  position: absolute;
-  bottom: 2rem;
-  left: 0;
-  width: 100%;
-  z-index: 2;
-
-  display: flex;
-  justify-content: space-between;
-  padding: 0 2rem;
-  color: white;
+/* opcional: adicionar padding extra só no texto inicial */
+.banner-texto {
+  padding-top: 5rem; /* substitui o antigo padding-top global */
 }
