@@ -47,6 +47,7 @@ class GestorIndexPage(Page):
 
 class Unidade(Page):
     titulo = RichTextField(blank=True)
+    subpage_types = ['core.SeminarioPage']
 
 
 class VideoBlock(blocks.StructBlock):
@@ -168,6 +169,7 @@ class SeminarioInfoBlock(blocks.StructBlock):
 
 class SeminarioPage(Page):
     template = "core/seminario_page.html"
+    parent_page_types = ['core.Unidade']
 
     info = StreamField([
         ('cor',RichTextBlock(required=False,help_text="Escrever em hexadecimal, ex: #ff0000", label="Cor principal")),
