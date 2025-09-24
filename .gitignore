@@ -322,7 +322,7 @@ tags
 dump.rdb
 
 ### Project template
-gestor_eventos/media/
+#gestor_eventos/media/
 
 .pytest_cache/
 .ipython/
