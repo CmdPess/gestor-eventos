@@ -38,14 +38,6 @@ $cor-principal: #198754;
   color: $red;
 }
 
-.seminario-banner {
-  position: relative;
-  width: 100%;
-  height: 80vh;
-  overflow: hidden;
-}
-
-
 .navbar {
   transition: all 0.3s ease;
 }
@@ -75,8 +67,8 @@ $cor-principal: #198754;
 
 .imagem-cartao{
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: 250px;
+  object-fit: contain;
 }
 
 .section {
@@ -161,15 +153,6 @@ $cor-principal: #198754;
  padding-top: 73px;
 }
 
-.seminario-banner {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-}
-
 .banner-background-img {
   position: absolute;
   top: 0;
@@ -183,7 +166,7 @@ $cor-principal: #198754;
 
 .banner-texto,
 .banner-inferior {
-  position: relative;
+  position: absolute;
   z-index: 2;
   color: white;
   padding: 2rem;

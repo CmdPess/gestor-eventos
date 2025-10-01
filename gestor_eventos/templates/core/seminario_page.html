@@ -29,18 +29,21 @@
          {% if block.block_type == 'foto_banner' %}
   {% if block.value.foto %}
     {% image block.value.foto original as bg %}
-    <div class="seminario-banner">
+    <div class="seminario-banner overflow-hidden">
 
-      <img src="{{ bg.url }}" alt="Banner" class="banner-background-img">
+      <img src="{{ bg.url }}" alt="Banner" class="img-fluid" style="width: 100%;">
+{#      <div style="background-image: url('{{ bg.url  }}')"></div>#}
 
-      <div class="banner-texto">
-        {% if block.value.titulo %}
-          <h1>{{ block.value.titulo }}</h1>
-        {% endif %}
-        {% if block.value.subtitulo %}
-          <p>{{ block.value.subtitulo }}</p>
-        {% endif %}
-      </div>
+
+
+{#      <div class="banner-texto">#}
+{#        {% if block.value.titulo %}#}
+{#          <h1>{{ block.value.titulo }}</h1>#}
+{#        {% endif %}#}
+{#        {% if block.value.subtitulo %}#}
+{#          <p>{{ block.value.subtitulo }}</p>#}
+{#        {% endif %}#}
+{#      </div>#}
 
       <div class="banner-inferior text-md-center h5">
         <div>
@@ -121,7 +124,9 @@
               <div class="pt-3 col-12 col-md-8 mx-auto">
                 <h4 class="fa-bold">{{ block.value.subtitulo}}</h4>
                 <h5>{{ block.value.nome }}</h5>
-                <p>{{ block.value.consIn|richtext }}</p>
+                <div class="text-start">
+                  <p>{{ block.value.consIn|richtext }}</p>
+                </div>
               </div>
             </div>
         </section>
