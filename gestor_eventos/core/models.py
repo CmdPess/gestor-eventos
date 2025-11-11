@@ -222,31 +222,31 @@ class SeminarioPage(Page):
         for block in self.info:
 
             if block.block_type == 'conclusoes' and 'conclusoes' not in adicionados:
-                items.append({'id': 'conclusoes', 'label': 'CONCLUSÕES'})
+                items.append({'id': 'conclusoes', 'label': block.value.titulo.upper()})
                 adicionados.add('Conclusões')
 
             if block.block_type == 'apresentacao' and 'apresentacao' not in adicionados:
-                items.append({'id': 'apresentacao', 'label': 'APRESENTAÇÃO'})
+                items.append({'id': 'apresentacao', 'label': block.value.titulo.upper()})
                 adicionados.add('apresentacao')
 
             if block.block_type == 'oradores' and 'oradores' not in adicionados:
-                items.append({'id': 'oradores', 'label': 'ORADORES'})
+                items.append({'id': 'oradores', 'label': block.value.titulo.upper()})
                 adicionados.add('oradores')
 
             if block.block_type == 'moderadores' and 'moderadores' not in adicionados:
-                items.append({'id': 'moderadores', 'label': 'MODERADORES'})
+                items.append({'id': 'moderadores', 'label': block.value.titulo.upper()})
                 adicionados.add('moderadores')
 
             if block.block_type == 'video' and 'video' not in adicionados:
-                items.append({'id': 'video', 'label': 'TRANSMISSÃO'})
+                items.append({'id': 'video', 'label': block.value.titulo.upper()})
                 adicionados.add('video')
 
             if block.block_type == 'contactos' and 'contactos' not in adicionados:
-                items.append({'id': 'contactos', 'label': 'CONTACTOS'})
+                items.append({'id': 'contactos', 'label': block.value.titulo.upper()})
                 adicionados.add('contactos')
 
             if block.block_type == 'programa' and 'programa' not in adicionados:
-                items.append({'id': 'programa', 'label': 'PROGRAMA'})
+                items.append({'id': 'programa', 'label': block.value.titulo.upper()})
                 adicionados.add('programa')
 
             if block.block_type == 'generico' and 'generico' not in adicionados:
