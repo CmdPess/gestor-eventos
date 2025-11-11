@@ -220,38 +220,37 @@ class SeminarioPage(Page):
         adicionados = set()  # controlamos blocos já inseridos na navbar
 
         for block in self.info:
-            titulo = block.value.get('titulo')
 
             if block.block_type == 'conclusoes' and 'conclusoes' not in adicionados:
-                items.append({'id': 'conclusoes', 'label': titulo})
+                items.append({'id': 'conclusoes', 'label': block.value.get('titulo')})
                 adicionados.add('Conclusões')
 
             if block.block_type == 'apresentacao' and 'apresentacao' not in adicionados:
-                items.append({'id': 'apresentacao', 'label': titulo})
+                items.append({'id': 'apresentacao', 'label': block.value.get('titulo')})
                 adicionados.add('apresentacao')
 
             if block.block_type == 'oradores' and 'oradores' not in adicionados:
-                items.append({'id': 'oradores', 'label':titulo})
+                items.append({'id': 'oradores', 'label':block.value.get('titulo')})
                 adicionados.add('oradores')
 
             if block.block_type == 'moderadores' and 'moderadores' not in adicionados:
-                items.append({'id': 'moderadores', 'label': titulo})
+                items.append({'id': 'moderadores', 'label': block.value.get('titulo')})
                 adicionados.add('moderadores')
 
             if block.block_type == 'video' and 'video' not in adicionados:
-                items.append({'id': 'video', 'label': titulo})
+                items.append({'id': 'video', 'label': block.value.get('titulo')})
                 adicionados.add('video')
 
             if block.block_type == 'contactos' and 'contactos' not in adicionados:
-                items.append({'id': 'contactos', 'label': titulo})
+                items.append({'id': 'contactos', 'label': block.value.get('titulo')})
                 adicionados.add('contactos')
 
             if block.block_type == 'programa' and 'programa' not in adicionados:
-                items.append({'id': 'programa', 'label': titulo})
+                items.append({'id': 'programa', 'label': block.value.get('titulo')})
                 adicionados.add('programa')
 
             if block.block_type == 'generico' and 'generico' not in adicionados:
-                items.append({'id': block.value.titulo, 'label': titulo})
+                items.append({'id': block.value.titulo, 'label': block.value.get('titulo')})
                 adicionados.add('programa')
         return items
 
