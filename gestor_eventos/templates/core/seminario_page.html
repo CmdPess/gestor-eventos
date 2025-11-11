@@ -135,10 +135,10 @@
       {% if block.block_type == 'video' %}
         {% if block.value.video_url %}
           <section id="video" class="section p-3 {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray {% endif %} py-5">
-              <div class="container">
+              <div class="container text-center">
                 <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
                 {% if block.value.is_link %}
-                  <a class="btn btn-primary" target="_blank" href="{{ block.value.video_url }}" role="Link Transmissão"></a>
+                  <a class="btn btn-outline-secondary cor-principal bg-light-green" target="_blank" href="{{ block.value.video_url }}" role="Link Transmissão">Aceder à Transmissão</a>
                 {% else %}
                   <div class="ratio ratio-16x9 frameVideo">
                       {% embed block.value.video_url %}
