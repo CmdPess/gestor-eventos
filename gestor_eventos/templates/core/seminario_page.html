@@ -137,9 +137,13 @@
           <section id="video" class="section p-3 {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray {% endif %} py-5">
               <div class="container">
                 <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
+                {% if block.value.is_link %}
+                  <a class="btn btn-primary" target="_blank" href="{{ block.value.video_url }}" role="Link Transmissão"></a>
+                {% else %}
                   <div class="ratio ratio-16x9 frameVideo">
                       {% embed block.value.video_url %}
                   </div>
+                {% endif %}
               </div>
           </section>
         {% endif %}
