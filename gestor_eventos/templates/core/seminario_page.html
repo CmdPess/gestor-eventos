@@ -5,7 +5,7 @@
   {% block navbar-items %}
     <ul class="navbar-nav ms-auto">
         {% for item in navbar_items %}
-           <div class="container-fluid">
+           <div class="container-fluid" style="align-content: center;">
               <a class="nav-link col-md-auto cor-principal fs-7" href="#{{ item.id }}">{{ item.label }}</a>
            </div>
         {% endfor %}
