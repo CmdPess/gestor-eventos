@@ -124,7 +124,7 @@
               <div class="pt-3 col-12 col-md-8 mx-auto">
                 <h4 class="fa-bold">{{ block.value.subtitulo}}</h4>
                 <h5>{{ block.value.nome }}</h5>
-                <div class="text-start">
+                <div class="text-justify">
                   <p>{{ block.value.consIn|richtext }}</p>
                 </div>
               </div>
@@ -138,7 +138,7 @@
               <div class="container text-center">
                 <h2 class="text-center mb-5 cor-principal text-uppercase">{{ block.value.titulo }}</h2>
                 {% if block.value.is_link %}
-                  <a class="btn btn-outline-secondary cor-principal bg-light-green" target="_blank" href="{{ block.value.video_url }}" role="Link Transmissão">Aceder à Transmissão</a>
+                  <a class="btn btn-outline-secondary cor-principal bg-light-green" target="_blank" href="{{ block.value.video_url }}" role="Link Transmissão">{{ block.value.link_label }}</a>
                 {% else %}
                   <div class="ratio ratio-16x9 frameVideo">
                       {% embed block.value.video_url %}
@@ -255,7 +255,7 @@
                          <div class="col-12 col-md-9">
                            <h5 class="fw-bold mb-1">{{ orador.nome }}</h5>
                            <p class="fst-italic text-muted mb-2">{{ orador.subtitulo }}</p>
-                           <div class="small mb-2">{{ orador.biografia|richtext }}</div>
+                           <div class="small mb-2 text-justify">{{ orador.biografia|richtext }}</div>
                            {% if orador.horario or orador.titulo_palestra %}
                              <div class="d-flex align-items-center text-muted mt-3">
                                <i class="bi bi-clock me-2"></i>
@@ -291,7 +291,7 @@
                          <div class="col-12 col-md-9">
                            <h5 class="fw-bold mb-1">{{ orador.nome }}</h5>
                            <p class="fst-italic text-muted mb-2">{{ orador.subtitulo }}</p>
-                           <div class="small mb-2">{{ orador.biografia|richtext }}</div>
+                           <div class="small mb-2 text-justify">{{ orador.biografia|richtext }}</div>
                            {% if orador.horario or orador.titulo_palestra %}
                              <div class="d-flex align-items-center text-muted mt-3">
                                <i class="bi bi-clock me-2"></i>
@@ -331,7 +331,7 @@
                          <div class="col-12 col-md-9">
                            <h5 class="fw-bold mb-1">{{ moderador.nome }}</h5>
                            <p class="fst-italic text-muted mb-2">{{ moderador.subtitulo }}</p>
-                           <div class="small mb-2">{{ moderador.biografia|richtext }}</div>
+                           <div class="small mb-2 text-justify">{{ moderador.biografia|richtext }}</div>
                            {% if moderador.horario or moderador.titulo_palestra %}
                              <div class="d-flex align-items-center text-muted mt-3">
                                <i class="bi bi-clock me-2"></i>
@@ -367,7 +367,7 @@
                          <div class="col-12 col-md-9">
                            <h5 class="fw-bold mb-1">{{ moderador.nome }}</h5>
                            <p class="fst-italic text-muted mb-2">{{ moderador.subtitulo }}</p>
-                           <div class="small mb-2">{{ moderador.biografia|richtext }}</div>
+                           <div class="small mb-2 text-justify">{{ moderador.biografia|richtext }}</div>
                            {% if moderador.horario or moderador.titulo_palestra %}
                              <div class="d-flex align-items-center text-muted mt-3">
                                <i class="bi bi-clock me-2"></i>
@@ -390,7 +390,7 @@
 
         {% if block.block_type == 'generico' %}
           <section id='{{ block.value.titulo }}' class="section p-3 text-center {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray {% endif %} py-5">
-            <div class="container">
+            <div class="container text-justify">
                 <h2 class="cor-principal text-uppercase">{{ block.value.titulo }}</h2>
                 <p>{{ block.value.conteudo|richtext }}</p>
               </div>

@@ -51,9 +51,10 @@ class Unidade(Page):
 
 
 class VideoBlock(blocks.StructBlock):
-    titulo = blocks.CharBlock(classname="title", required=True, label="Título da secção, deve ser 'Transmissão'")
+    titulo = blocks.CharBlock(classname="title", required=True, label="Título da secção")
     video_url = blocks.URLBlock(label="URL do vídeo (YouTube, Vimeo, etc)")
     is_link = blocks.BooleanBlock(label="Aparecer como link")
+    link_label = blocks.CharBlock(required=False, label="Texto Link", default="Aceder à Transmissão")
 
     class Meta:
         icon = "media"
