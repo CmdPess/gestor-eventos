@@ -192,8 +192,8 @@ class SeminarioPage(Page):
         'info': {'max_num': 1},
         'oradores': {'max_num': 1},
         'moderadores': {'max_num': 1},
-        'video': {'max_num': 1},
-        'programa': {'max_num': 1},
+        'video': {'max_num': 2},
+        'programa': {'max_num': 2},
         'contactos': {'max_num': 1}})
 
 
