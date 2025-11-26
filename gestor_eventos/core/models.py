@@ -217,40 +217,11 @@ class SeminarioPage(Page):
         Retorna uma lista de dicionários com os blocos que devem ser exibidos na navbar, com base nos blocos presentes no StreamField.
         """
         items = []
-        adicionados = set()  # controlamos blocos já inseridos na navbar
+        ignore = ['cor', 'foto_banner', 'info']
 
         for block in self.info:
+            if block.block_type not in ignore:
+                items.append({'id': block.block_type, 'label': block.value.get('titulo')})
 
-            if block.block_type == 'conclusoes' and 'conclusoes' not in adicionados:
-                items.append({'id': 'conclusoes', 'label': block.value.get('titulo')})
-                adicionados.add('Conclusões')
-
-            if block.block_type == 'apresentacao' and 'apresentacao' not in adicionados:
-                items.append({'id': 'apresentacao', 'label': block.value.get('titulo')})
-                adicionados.add('apresentacao')
-
-            if block.block_type == 'oradores' and 'oradores' not in adicionados:
-                items.append({'id': 'oradores', 'label':block.value.get('titulo')})
-                adicionados.add('oradores')
-
-            if block.block_type == 'moderadores' and 'moderadores' not in adicionados:
-                items.append({'id': 'moderadores', 'label': block.value.get('titulo')})
-                adicionados.add('moderadores')
-
-            if block.block_type == 'video' and 'video' not in adicionados:
-                items.append({'id': 'video', 'label': block.value.get('titulo')})
-                adicionados.add('video')
-
-            if block.block_type == 'contactos' and 'contactos' not in adicionados:
-                items.append({'id': 'contactos', 'label': block.value.get('titulo')})
-                adicionados.add('contactos')
-
-            if block.block_type == 'programa' and 'programa' not in adicionados:
-                items.append({'id': 'programa', 'label': block.value.get('titulo')})
-                adicionados.add('programa')
-
-            if block.block_type == 'generico' and 'generico' not in adicionados:
-                items.append({'id': block.value.titulo, 'label': block.value.get('titulo')})
-                adicionados.add('programa')
         return items
 
